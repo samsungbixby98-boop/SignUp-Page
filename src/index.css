@@ -4,6 +4,7 @@ body {
   background: linear-gradient(120deg, #0f172a, #1e3a8a, #7c3aed);
   min-height: 100vh;
   color: white;
+  background-image: url('https://i.pinimg.com/1200x/11/f1/2d/11f12d729e8c10be9eaef2131ab29a70.jpg');
 }
 
 .page {
