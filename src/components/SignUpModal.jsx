@@ -15,11 +15,17 @@ export default function SignUpModal({ onClose }) {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
+  // SIGNUP VALIDATION
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (form.password.length < 6) {
-      setMsg("❌ Password must be at least 6 characters!");
+    if (!form.email.includes("@")) {
+      setMsg("❌ Email must contain @");
+      return;
+    }
+
+    if (form.password.length < 6 || !/\d/.test(form.password)) {
+      setMsg("❌ Password must be 6+ chars & include a number");
       return;
     }
 
@@ -29,7 +35,7 @@ export default function SignUpModal({ onClose }) {
     }
 
     setMsg("✅ Pirate Joined Successfully!");
-    setTimeout(() => onClose(), 1200);
+    setTimeout(() => onClose(), 1500);
   };
 
   return (
@@ -37,63 +43,44 @@ export default function SignUpModal({ onClose }) {
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>Join the Crew</h2>
-          <button className="close" onClick={onClose}>
-            ✖
-          </button>
+          <button className="close" onClick={onClose}>✖</button>
         </div>
 
-        <form className="form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <input
             className="input"
             placeholder="Pirate Name"
-            value={form.name}
             onChange={(e) => update("name", e.target.value)}
-            required
           />
 
           <input
             className="input"
-            type="email"
             placeholder="Pirate Email"
-            value={form.email}
             onChange={(e) => update("email", e.target.value)}
-            required
           />
 
           <input
             className="input"
             type={showPass ? "text" : "password"}
             placeholder="Password"
-            value={form.password}
             onChange={(e) => update("password", e.target.value)}
-            required
           />
 
           <input
             className="input"
             type={showPass ? "text" : "password"}
             placeholder="Confirm Password"
-            value={form.confirm}
             onChange={(e) => update("confirm", e.target.value)}
-            required
           />
 
           <div className="row">
-            <input
-              type="checkbox"
-              id="showpass"
-              onChange={() => setShowPass(!showPass)}
-            />
-            <label htmlFor="showpass">Show Password</label>
+            <input type="checkbox" onChange={() => setShowPass(!showPass)} />
+            <label> Show Password</label>
           </div>
 
           {msg && <p className="message">{msg}</p>}
 
-          <button className="btn btn-primary" type="submit">
-            Create Pirate Account
-          </button>
-
-          <p className="hint">⚠️ Frontend only demo (no backend)</p>
+          <button className="btn btn-primary">Create Pirate Account</button>
         </form>
       </div>
     </div>
